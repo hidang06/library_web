@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./src
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: library
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 1
+    volumes:
+      - ./library.sql:/docker-entrypoint-initdb.d/library.sql
